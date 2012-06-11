@@ -1,0 +1,270 @@
+%---------------------------%
+%                           %
+%   Title:   Pajarita.doo   %
+%   Author:  Jérôme Gout    %
+%   Date:    14 May 2001    %
+%                           %
+%---------------------------%
+
+% a macro to choose my color
+\define \my_color { 
+	100, 85, 72
+}
+
+% diagram header : 
+% it contains all general information
+\diagram_header { 
+  \designer("Anonymous");
+  \title("'Pajarita'");
+  \diagramer("Jerome Gout");
+  \diagram_date(2001);
+  \comment("'Pjarita' means small bird in spanish.");
+  \comment("Original author of this model is unknown. I guess it comes from Spain.");
+  \comment("Difficulty : Simple - Use a mono colored 15cm square sheet.");
+  \bottom_margin(15);
+  \vertical_space(10);
+  \color_front(\my_color);
+  \color_back(\my_color);
+}
+
+% drawing zone height (for all next steps)
+\visible_area_height(60);
+
+\step {
+  \square(a,b,c,d);
+  \fill(front, a, b ,c ,d);
+  \valley_fold(a,c);
+  \simple_arrow(d, b, valley, unfold, right);
+  \valley_fold(b,d);
+  \simple_arrow(c,a, valley, unfold, left);
+  \caption("Mark diagonals.");
+  o = \intersection([a,c], [b,d]);
+
+}
+
+\step {
+  % useful points definition
+  ab2 = \middle(a,b);
+  bc2 = \middle(b,c);
+  cd2 = \middle(c,d);
+  da2 = \middle(d,a);
+
+  [ab1, cd3] = \point_to_point(a, ab2, [a, b], [c,d]);
+  \valley_fold(ab1, cd3, [a,c], [b,d]); % not all the line but just inside diagonals
+  \simple_arrow(da2, o, valley, unfold, left);
+
+  [ab3, cd1] = \point_to_point(b, ab2, [a, b], [c,d]);
+  \valley_fold(ab3, cd1, [b,d], [a,c]); % not all the line but just inside diagonals
+  \simple_arrow(bc2, o, valley, unfold, right);
+
+  \caption("Make pinches inside both diagonals.");
+}
+
+\step {
+  \fold(ab3, cd1, [b,d], [a,c]); % because there is still bugs ...
+  \fold(ab1, cd3, [a,c], [b,d]); % because there is still bugs ...
+  [da3, bc1] = \point_to_point(a, da2, [d,a], [b,c]);
+  \valley_fold(bc1, da3, [b,d]);
+  \simple_arrow(ab2, o, unfold, valley, right);
+
+  [da1, bc3] = \point_to_point(d, da2, [d,a], [b,c]);
+  \valley_fold(bc3, da1, [a,c]);
+  \simple_arrow(cd2, o, unfold, valley, left);
+}
+
+\step {
+  i1 = \intersection([ab3, cd1], [b,d]);
+  i2 = \intersection([ab3, cd1], [a,c]);
+  % cutting all edge at i1
+  \cut([ab3, cd1], i1);
+  \cut([b,d], i1);
+  \cut([da3, bc1], i1);
+  \hide([ab3, i1]);
+  \hide([i1, bc1]);
+  % same with i2, becareful [ab3, cd1] has been cut -> [i1, cd1]
+  \cut([i1, cd1], i2);
+  \cut([a,c], i2);
+  \cut([da1, bc3], i2);
+  \hide([i2, bc3]);
+  \hide([i2, cd1]);
+
+  % re-forming folds of the two last steps (with new points)
+  \valley_fold(da3, i1);
+  \valley_fold(i1, i2);
+  \valley_fold(i2, da1);
+  \simple_arrow(ab2, o, none, valley, right);
+  \simple_arrow(cd2, o, none, valley, left);
+  \valley_fold(i1, b);
+  \valley_fold(i2, c);
+  \mountain_fold(i1, bc2);
+  \mountain_fold(i2, bc2);
+  \simple_arrow(bc2, o, none, valley, right);
+ 
+  % preparing moves of the next step
+  \cut([a,d], da1);
+  \cut([a, da1], da3);
+  i3 = \inter_cut([d, i1], [da1, i2]);
+  \cut([da1, i2], i3);
+  \cut([ab1, cd3], i3);
+  \hide([i3, cd3]);
+  
+  i4 = \inter_cut([a, i2], [da3, i1]);
+  \cut([da3, i1], i4);
+  \cut([ab1, i3], i4);
+  \hide([i4, ab1]);
+
+  \caption("Use existant folds made in last two steps");
+  \caption("Make them concurrently");
+}
+
+% now we draw it bigger
+\scale(130);
+
+\step {
+  % moves resulting of the three previous folds (left to right)
+  \move(a, da2);
+  \move(d, da2);
+  \move(ab1, [i4, i1]);
+  \move(cd3, [i2, i3]);
+  % to move b on bc2 we have to cut b bc2 on its middle
+  \cut([b,c], bc1);
+  \move(b, bc2);
+  \move(bc1, [i1, bc2]); % move temporary point also
+  \move(bc2, o);
+  \move(c, b); % it should be \move(c, bc2) but bc2 has moved
+  \move(ab2, o);
+  \move(cd2, o);
+
+  % fill
+  \unfill(a, b, c, d);
+  \fill(back, da3, i1, b, i2, da1);
+
+  % hide elements and redraw with correct line style borders
+  \hide([i1, i2]);
+  \hide([i3, i4]);
+  \hide([i1, i3]);
+  \hide([i2, i4]);
+  \hide(bc2);
+  \border(da3, i4);
+  \border(i4, i1);
+  \border(i1, b);
+  \border(c, i2);
+  \border(i2, i3);
+  \border(i3, da1);
+
+  % new folds --
+  \valley_fold(ab2, i4);
+  \mountain_fold(a, i4);
+  \valley_fold(cd2, i3);
+  \mountain_fold(d, i3);
+  \xray_fold(i4, i3);
+
+  % points that do not exist really
+  i5 = \symmetry(ab2, [i4, i1]);
+  i6 = \symmetry(cd2, [i2, i3]);
+
+  \simple_arrow(a, i5, none, valley, left);
+  \simple_arrow(d, i6, none, valley, right);
+  \caption("Open each layer to top and bottom");
+  \caption("Use also the hidden crease made in step 2,");
+  \caption("We show it using an x-ray fold");
+
+  % preparing next moves
+  \cut([a,b], ab2);
+  \cut([c,d], cd2);
+}
+
+\step {
+  \move(a, i5);
+  \move(da3, [i4, i3]);
+  \move(da2, o);
+  \move(d, i6);
+  \move(da1, [i4, i3]);
+  \hide([i4, ab2]);
+  \hide([i3, cd2]);
+  % some edges change
+  \border(i4, a);
+  \border(i4, i3);
+  \border(i3, d);
+  \fold(i4, da3);
+  \fold(i3, da1); 
+  \border(i4, i1, [a,da3]);
+  \border(i3, i2, [d,da1]);
+
+  % prepare the "pajarita" head
+  \valley_fold(i4, da2);
+  \simple_arrow(a, [i4, da2], unfold, valley, left);
+  % fill
+  \fill(back, i4, a, d, i3);
+  \caption("Here is the result !");
+  \caption("Fold unfold to make easier future fold");
+  \caption("Turn over horizontally.");
+  \turn_over_vertical; 
+}
+
+\step{
+  % restore the back layer to the top
+  % be careful points have been moved by turn_over_vertical
+  \border(i1, i4);
+  \border(i2, i3);
+  \border(ab2, a, [i1, i4]);
+  \border(cd2, d, [i2, i3]);
+  \hide([da1, da3]);
+  \hide([i4, da2]);
+  \border(i1, i2);
+  \show([i1, i3]);
+  \show([i4, i2]);
+  \border(bc2, b, [i1, i2]);
+  \border(ab2, b, [i1, i2]);
+  \border(bc2, c, [i1, i2]);
+  \border(cd2, c, [i1, i2]);
+ 
+  % next fold - valley diagonal
+  \valley_fold(i4, i2);
+  \simple_arrow(i1, i3, none , valley, left, 50); 
+
+  % preparing next moves
+  \cut([i1, i3], o);
+
+  \caption("Fold the model along the diagonal.");
+}
+
+\step{
+  \unfill(da3, i1, b, i2, da1);
+  \move(i1, i3);
+  \move(b, d);
+  \move(bc1, cd2);
+  \hide([da3, i4]);
+  \hide(i3); % to hide [i3, i2] and [i3, i4]
+  \hide(o);
+  \hide(da3);
+  \cut([i2, i4], o); % [o, i4] and [o, i2] are still drawn because edges
+                     % are created after we hide all edges containing o
+  \space_fold([i2, o], 5, 5);  % change percent limit at o
+  \space_fold([i4, o], 5, 5);  % change percent limit at o
+  \border(i1, i2, [bc2, b]);
+
+  % fill
+  \fill(back, c, o, da1, i2);
+
+  \valley_fold(i4, o);
+  \simple_arrow(a, [i4, o], none, valley, right);
+  \caption("Reverse fold the 'pajarita' head");
+  \caption("Open model to reverse easily the fold.");
+}
+
+\rotate(45);
+
+\step{
+ \unfill(i4, a, d, i3);
+ \move(a, [i4, o]);
+ \move(da3, [i4, o]);
+
+ \border(ab2, a);
+ \border(i4, i1, [ab2, a]);
+ \border(i4, o);
+
+ \fill(back, i4, i1, b, ab2);
+ \fill(front, i4, a, ab2);
+ \caption("Finished model !");
+}

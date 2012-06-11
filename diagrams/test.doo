@@ -1,0 +1,32 @@
+%----------------------------------------
+%
+%   TEST by Jerome Gout,  V. 1.0
+%
+%----------------------------------------
+
+\diagram_header {
+  \diagram_date(2001);
+  \design_date(11, 01, 1999); 
+  \diagrammer("J. Gout (helped by X. Fouchet)");
+  \designer("???");
+  \title("test");
+  \color_front(white);
+  \color_back(100, 100, 0);
+}
+
+\step {
+  \square(a,b,c,d);
+  ab = \middle(a,b);
+  [bc, o] = \rabbit_ear(c, ab, d, [b, c]);
+  \valley_fold(ab, o);
+  \valley_fold(c, o);
+  \valley_fold(d, o);
+  \mountain_fold(bc, o);
+  \caption("[bc, o] = \rabbit_ear(c, ab, d, [b, c]);");
+}
+
+\rotate(22.5);
+
+\step {
+  \text(bc, "pipo");
+}

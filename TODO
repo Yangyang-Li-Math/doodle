@@ -1,0 +1,167 @@
+			DOODLE TODO list
+
+
+version 2.2
+
+ - Better error management
+ - \zig_zag(edge [,right/left][,valley/mountain][,distance])
+ - compound fold -> geometric operator (\squash_fold)
+
+
+versions futures : 
+
+ - \scale devient relatif ?
+ - si diag info non vide mais pas de step .. faire une page blanche
+ - Revoir le clipping des steps (peut etre pas systematique)
+ - Taille des fleches (return simple) non proportionnelle
+ - Definir open_arrow, push_arrow, zig_zag_arrow, repeat_arrow ...
+ - Zoom/isolation d'une zone (cercle)
+ - Faire \sub_step : affecte index avec des lettres ex: 4, 5a, 5b, 6
+ - reflechir comment faire facilement lorsque le texte est ecrase par
+   la figure qui n'est pas clippee et qu'on veut pas etirer le H
+ - possibilite de definir la meme macro avec des un nb de parametres differents
+
+			DOODLE DONE List
+
+2.1:
+ 17/10/01 - rotate now takes real as parameter.
+ 10/10/01 - \rabbit_ear completed for all syntaxes
+ 02/10/01 - \turn_over_* can only be found between two steps (as \rotate).
+ 02/10/01 - \turn_over_* changes dxdy (forgotten feature of 2.0)
+ 02/10/01 - \repeat_arrow is completed with both label symbols
+ 02/10/01 - \ref(SYMBOL) operator added in strings
+ 02/10/01 - \label(SYMBOL) operator added
+ 28/09/01 - \repeat_arrow(vertex,angle[,nb][,distance])
+ 27/09/01 - \push_arrow(vertex) is oriented to step center
+ 26/09/01 - \open_arrow(edge,[right/left])
+ 26/09/01 - \push_arrow(vertex[,angle,distance])
+ 19/09/01 - debug placement algorithm introduces now a random value
+ 17/09/01 - \rabbit_ear simple (center is not given)
+ 14/09/01 - left and right parameter becomes optional (default right)
+ 14/09/01 - \diagramer -> \diagrammer
+ 14/09/01 - rotate symbol changes according to the angle value.
+ 07/09/01 - Upper case in extension allowed (.DOO)
+
+2.0:
+ 30/08/01 - '(' et ')' dans les chaines postscript
+ 30/08/01 - return_arrow + shift : patché
+ 28/08/01 - style des lignes (valley ...) independant du scale factor
+ 28/08/01 - \unshift(<liste de points>); et \unshift; (pour all)
+ 28/08/01 - operation de duplication de vertex ex: newA = A;
+ 28/08/01 - \intersection+\shift -> tout operateur de creation de point+shift
+ 28/08/01 - \rotate avant le premier step crash -> steps[-1] !
+ 27/08/01 - \shift prend decalages decimaux
+
+1.8:
+ 09/08/01 - \text: affichage de texte sur le step sur un point
+ 07/08/01 - shift+scale : dx dy recalculer en fonction de l'echelle
+ 07/08/01 - shift+simple_arrows : tenir compte du decallage dans
+            le dessin des fleches
+ 23/07/01 - shift+rotation : recalculer dx dy en fonction de la rotation
+ 23/07/01 - changement de syntaxe pour \rotate: entre deux steps seulement
+ 23/07/01 - shift+pourcentage : bug fix sur le calcul de edge visible
+ 17/07/01 - \debug_line \debug_point (\debug; fait les deux) affichent tout
+ 17/07/01 - \debug_point(a,b,c); localise des points donnes
+ 17/07/01 - \debug_line(a,b,c); localise les lignes contenant des points donnes
+ 17/07/01 - \debug_line([a, b]); localise un segment donne
+ 13/07/01 - \unfill sans argument pour effacer toutes les faces deja definies
+ 13/07/01 - operateur de pli avec pourcentage v1 et limite sur V2
+ 12/07/01 - creer un == visuel sur les points a utiliser 
+            dans search_edge_and_hide_equivalent
+1.7:	
+ 20/06/01 - operateur \darker
+ 20/06/01 - operateur \lighter
+ 19/06/01 - un xray n'est pas conserver au step suivant
+ 15/06/01 - ajout du nombre de pages dans le PS conformement au DSC
+ 01/06/01 - generation PS: bug fix edge avec les extremites equivalentes
+ 15/05/01 - changement de syntaxe pour \rotate -> rotate(ANGLE)
+ 10/05/01 - meilleure gestion des extensions du fichier d'entree (.doo ou .d)
+ 10/05/01 - correction d'un bug win32 vertex::vertex_to_line
+ 16/01/01 - reset du DxDy en cas de \move
+ 15/01/01 - epaisseur des arrow fonction de l'echelle courante
+ 15/01/01 - decalage Dx Dy version 2
+ 14/01/01 - prise en compte du decallage DxDy dans l'affichage des faces
+ 12/01/01 - decalage Dx Dy version 1
+ 12/01/01 - modification des operateurs de creation d'edge pour integrer
+            les partial fold (limite pourcentage ou edge pour chaque extremite)
+ 12/01/01 - operateur \shift
+ 12/01/01 - epaisseur des lignes fonction de l'echelle courante
+ 06/12/00 - projet sous VC6.0
+ 06/12/00 - flag _PS pour integrer une sortie PS ou non
+ 06/12/00 - instruction ; seule ok partout
+ 06/12/00 - operateur \def et \xxxx pour definir une macro et l'utiliser
+ 06/12/00 - integration preprocessor dans parser.l pour coherence
+ 06/12/00 - remplacement nom de fichier char* par string
+ 06/12/00 - face: suppression constructeur en trop
+ 06/12/00 - utilisation de std partout
+ 06/11/00 - operateur \eps (private)
+ 06/11/00 - operateur \reset
+ 30/10/00 - operateur \inter_cut
+ 30/10/00 - operateur \space_fold
+ 13/10/00 - operateur \perpendicular
+ 13/10/00 - operateur \parallel
+ 13/10/00 - operateur \move
+ 22/08/00 - changer la syntaxe op : data en op(data) fonctionnelle
+ 22/08/00 - definition de l'element STRING dans la syntaxe : "dfglkdfgm"
+ 03/07/00 - ajout des dimensions (W, H) du clip pour un clip local step
+ 31/07/00 - operateur \clip \unclip
+ 31/07/00 - operateur \vertical_rectangle, \horizontal_rectangle
+ 31/07/00 - Fin du calcul de la return_arrow fonction du ratio (default 50%)
+ 26/07/00 - Ajout angle de courbure dans \simple_arrow (default 60 deg)
+ 26/07/00 - Fleches simple et return completees
+ 25/07/00 - Permiere version du \return_arrow
+ 25/07/00 - \arrow -> \simple_arrow
+ 18/07/00 - Retirer du code l'utilisation de l'objet operateur.
+ 18/07/00 - First page header - Sortie PostScript finie
+ 18/07/00 - commentaires general (3 lignes)
+ 17/07/00 - footer/header de chaque page
+ 17/07/00 - operateur \comment dans le bloc header
+ 13/07/00 - repartition de l'espace vertical entre les lignes -> equilibre
+ 10/07/00 - operateur \debug_info (debug uniquement a supprimer dans v1)
+ 07/07/00 - operateur \unfill dans un step block
+ 06/07/00 - operateur \fill dans un step block
+ 06/07/00 - operateur \color_front dans le diagram_header
+ 06/07/00 - operateur \color_back  dans le diagram_header
+ 06/07/00 - caption multiples (une ligne par operateur \caption)
+ 26/06/00 - turn et rotate symboles centres sur coin sup visi area
+ 09/06/00 - operateur \left_margin
+ 09/06/00 - operateur \right_margin
+ 09/06/00 - operateur \top_margin
+ 09/06/00 - operateur \bottom_margin
+ 09/06/00 - operateur \vertical_space
+ 09/06/00 - operateur \horizontal_space
+ 07/06/00 - operateur \scale (entre les steps et dans un step block)
+ 07/06/00 - operateur \visible_area_height (entre les steps)
+ 07/06/00 - operateur \visible_area_width  (entre les steps)
+ 06/06/00 - operateur \visible_area_height (dans diagram_header, step blocks)
+ 06/06/00 - operateur \visible_area_width  (dans diagram_header, step blocks)
+ 06/06/00 - operateur \visible_area_center (dans un step block)
+ 29/05/00 - operateur \partial_border
+ 29/05/00 - operateur \partial_fold
+ 29/05/00 - operateur \partial_valley
+ 29/05/00 - operateur \partial_mountain
+ 29/05/00 - operateur \partial_xray
+ 26/05/00 - operateur \xray
+ 18/05/00 - completer \point_to_line pour pouvoir acceder aux deux possibilites
+ 17/05/00 - nettoyage de la table des symboles (symboles temporaires - arrow)
+ 17/05/00 - option verbose (-v) pour affichage des traces en cours de parsing
+ 16/05/00 - operateur \debug
+ 27/04/00 - operateur \line_to_line
+ 27/04/00 - operateur \symmetry
+ 27/04/00 - operateur \intersection
+ 27/04/00 - operateur \show (edge et liste de vertex)
+ 27/04/00 - operateur \turn_over_vertical et \turn_over_horizontal
+ 26/04/00 - operateur \border pour construire manuellement l'apply_fold
+ 26/04/00 - extension de \valley_fold et \mountain_fold pour pinch
+ 26/04/00 - operateurs \hide (edge et liste de vertex)
+ 21/04/00 - affichage partiel des edges de type Fold (defaut 5% d'espace)
+ 21/04/00 - arrow across edge : \arrow(B, [C,AB2],valley, none,left)
+ 21/04/00 - arrow finale valley/unfold
+ 21/04/00 - operateur \rotate
+ 21/04/00 - operateur \turn
+ 20/04/00 - arrow ALPHA degres
+ 19/04/00 - arrow 90 degres
+ 19/04/00 - changement d'odre des symboles du carre : commence coin sup gauche
+ 19/04/00 - Update des elements du step precedant lors de la 
+            creation d'un nouveau step (autre que le premier)
+ 19/04/00 - operator== et gdb_info mis en const ...

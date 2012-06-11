@@ -1,0 +1,7 @@
+\define \rabbit_ear1 (a,b,c, e1, e2, center, new) {
+  [new, center] = \rabbit_ear(a, b, c, [e1, e2]);
+  \valley_fold(center, a);
+  \valley_fold(center, b);
+  \valley_fold(center, c);
+  \mountain_fold(center, new);
+}

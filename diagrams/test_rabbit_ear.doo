@@ -1,0 +1,69 @@
+%----------------------------------------
+%
+%   TEST by Jerome Gout,  V. 1.0
+%
+%----------------------------------------
+
+\diagram_header {
+  \diagram_date(2001);
+  \design_date(11, 01, 1999); 
+  \diagrammer("J. Gout (helped by X. Fouchet)");
+  \designer("???");
+  \title("test");
+  \color_front(white);
+  \color_back(100, 100, 0);
+}
+
+\step {
+  \square(a,b,c,d);
+  ab = \middle(a,b);
+  [bc, o] = \rabbit_ear(c, ab, d, [b, c]);
+  \valley_fold(ab, o);
+  \valley_fold(c, o);
+  \valley_fold(d, o);
+  \mountain_fold(bc, o);
+  \debug_point;
+  \caption("[bc, o] = \rabbit_ear(c, ab, d, [b, c]);");
+}
+
+\step {
+  \reset;
+  \square(a,b,c,d);
+  ab = \middle(a,b);
+  o = \intersection(a,c, b,d);
+  bc = \rabbit_ear(c, ab, d, o, [b, c]);
+  \valley_fold(ab, o);
+  \valley_fold(c, o);
+  \valley_fold(d, o);
+  \mountain_fold(bc, o);
+  \debug_point;
+  \caption("bc = \rabbit_ear(c, ab, d, o, [b, c]);");
+}
+
+\rotate(22.5);
+
+\step {
+  \reset;
+  \diamond(a,b,c,d);
+  \fold(a,c);
+  [bc, o] = \rabbit_ear(b, c, a, [b, c]);
+  \valley_fold(a, o);
+  \valley_fold(b, o);
+  \valley_fold(c, o);
+  \mountain_fold(bc, o);
+  \debug_point;
+  \caption("[bc, o] = \rabbit_ear(b, c, a, [b, c]);");
+}
+
+\step {
+  \reset;
+  \diamond(a,b,c,d);
+  \fold(a,c);
+  [bc, o] = \rabbit_ear(b, a, c);
+  \valley_fold(a, o);
+  \valley_fold(b, o);
+  \valley_fold(c, o);
+  \mountain_fold(bc, o);
+  \debug_point;
+  \caption("[bc, o] = \rabbit_ear(b, a, c);");
+}

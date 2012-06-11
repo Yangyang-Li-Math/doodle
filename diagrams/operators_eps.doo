@@ -1,0 +1,536 @@
+%----------------------------------------
+%
+%  All operator figures presented into  
+%  the reference manual come from this file
+%  One by step.
+%
+%  Warning: this Doodle source produces more
+%  than one postscript file, it makes also
+%  one encapsuled postscript file for each
+%  step corresponding to one reference 
+%  manual figure.
+%
+% NOTE : eps produces eps with default boundaries
+%        left   : 210
+%        bottom : 480
+%        right  : 380
+%        top    : 655
+% Those boundaries are sometimes locally modified
+%----------------------------------------
+
+\diagram_header {
+  \diagram_date(\today);
+  \design_date(\today); 
+  \diagrammer("Jerome Gout");
+  \designer("Jerome Gout");
+  \title("Reference manual operator figures");
+  \color_front(white);
+  \color_back(100, 100, 0);
+}
+
+%----------------------------------------
+% fraction
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  ab4 = \fraction(a, b, 1, 4);
+  cd5_4 = \fraction(c, d, 5, 4); % cd5_4 doesn't belong to segment [c,d]
+
+  \valley_fold(ab4, cd5_4);
+  \debug_point;
+  \eps("fraction.eps", 170, 480, 380, 655);
+}
+
+%----------------------------------------
+% inter_cut
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  ab1 = \fraction(a,b, 30, 100);
+  cd1 = \perpendicular([c,d], ab1,[c,d] );
+  \fold(ab1, cd1);
+  da2 = \middle(a,d);
+  cd2 = \middle(c,d);
+  \valley_fold(da2, cd2);
+  o1 = \inter_cut([ab1, cd1], [da2, cd2]);
+
+  \debug_point;
+  \eps("inter_cut.eps");
+} 
+
+%----------------------------------------
+% intersection
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  o = \intersection([a,c], [b, d]);
+  \text(o, "o");
+  \debug_point;
+  \eps("intersection.eps");
+}
+
+%----------------------------------------
+% line_to_line
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  [mid_ab, mid_cd] = \line_to_line([a,d], [b,c], [a, b], [c, d]);
+  \valley_fold(mid_ab, mid_cd);
+  \simple_arrow(b, a, none, valley, left);
+  \debug_point;
+  \eps("line_to_line.eps");
+}
+  
+\step {
+  \reset;
+  \square(a,b,c,d);
+  a2 = \line_to_line(d, a, b, [a,b]);
+  \fold(d,b);
+  \valley_fold(d, a2);
+  \simple_arrow(a, [d, a2], none, valley, left, 35);
+  \debug_point;
+  \eps("bissector.eps");
+}
+
+%----------------------------------------
+% middle
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  ab2 = \middle(a,b);
+  \debug_point;
+  \text(ab2, "ab2");
+  \eps("middle.eps");
+}
+
+%----------------------------------------
+% move (bissect a square diagonal)
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  v1 = \line_to_line(b, a, d, [a,d]);
+  \border(v1, b);
+  \cut([a,d], v1);
+  \move(a, [v1, b]);
+  \fill(back, v1, a, b);
+  \debug_point;
+  \eps("move.eps");
+}
+
+%----------------------------------------
+% parallel
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  v1 = \line_to_line(b, a, d, [a,d]);
+  \fold(v1, b);
+  \fold(d,b);
+
+  v2 = \parallel([d, b], v1, [a, b]);
+  \valley_fold(v1, v2);
+
+  \debug_point;
+  \eps("parallel.eps");
+}
+
+%----------------------------------------
+% perpendicular
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  v1 = \line_to_line(b, a, d, [a,d]);
+  \border(v1, b);
+  \cut([a,d], v1);
+  \move(a, [v1, b]);
+  \fill(back, v1, a, b);
+
+  v2 = \perpendicular([v1, b], c);
+  \valley_fold(v2, c);
+
+  v3 = \perpendicular([v1, b], a);
+  v4 = \perpendicular([v1, b], a, [d,c]);
+  \valley_fold(v3, v4);
+
+  \debug_point;
+  \eps("perpendicular.eps");
+}
+
+%----------------------------------------
+% point_to_line
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  ab = \middle(a,b);
+  da = \middle(d,a);
+  bc = \middle(b,c);
+  o = \middle(a,c);
+  \cut([a,b], ab);
+  \cut([d,a], da);
+  \hide(a);
+  \border(da, ab);
+  \fold(da, bc);
+  i = \middle(da, ab);
+  \cut([da, ab], i);
+  f = \point_to_line(i, o, [da, bc], [da, i]);
+  \valley_fold(f, o);
+%  \simple_arrow(i, [f, o], none, valley, left);
+  s = \point_to_line(i, o, [da, bc], [ab, b], second);
+  \valley_fold(s, o);
+%  \simple_arrow(i, [s, o ], none, valley, left);
+
+  \debug_point;
+  \eps("point_to_line1.eps");
+}
+
+\step {
+  \reset;
+  \square(a,b,c,d);
+  ab = \middle(a,b);
+  da = \middle(d,a);
+  o = \middle(a,c);
+  \cut([a,b], ab);
+  \cut([d,a], da);
+  \hide(a);
+  \border(da, ab);      
+  i1 = \middle(da, ab);
+  \cut([da, ab], i1);
+  i2 = \point_to_line(i1, d, [c, d], [b, c], second);
+  \valley_fold(d, i2);
+  \simple_arrow(i1, [d, i2], none, valley, left);
+  
+  \debug_point;
+   \eps("point_to_line2.eps");	
+}
+
+%----------------------------------------
+% point_to_point
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  ab = \middle(a,b);
+  cd = \middle(c,d);
+  \fold(cd, ab, 80, 5);
+  [i1, i2] = \point_to_point(c, ab, [d, a], [b, c]);
+  \valley_fold(i1, i2);
+  \simple_arrow(c, ab, none, valley, right, 45);
+  \debug_point;
+  \eps("point_to_point.eps");	
+}
+
+%----------------------------------------
+% shift
+%----------------------------------------
+\step {
+  \reset;
+  \diamond(a,b,c,d);
+  \move(c, a);
+  \border(d, b);
+  \shift(a, 4, 0);
+  \border(d, a, [c, b]);
+  \fill(back, d, a, b);
+  \fill(front, d, c, b);
+  \debug_point;
+  \eps("shift.eps", 190, 540, 410, 675);
+}
+
+\step {
+  \reset;
+  \square(a,b,c,d);
+  \shift(c, -10, 0);
+  aa = \symmetry(c, [d, b]);
+  \border(d,b);
+  \border(c, aa);
+  \debug_point;
+  \eps("shift_geo.eps");
+}
+
+
+%----------------------------------------
+% symmetry
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  ab = \middle(a,b);
+  cd = \middle(c,d);
+  da = \middle(d,a);
+  \cut([d,a], da);
+  bc = \symmetry(da, [ab, cd]);
+  \fold(ab, cd);
+  \cut([b,c], bc);
+
+  \debug_point;
+  \eps("symmetry.eps");
+}
+
+%----------------------------------------
+% border all limits
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  ab1 = \fraction(a, b, 25, 100);
+  ab3 = \fraction(a, b, 75, 100);
+  dc1 = \fraction(d, c, 25, 100);
+  dc3 = \fraction(d, c, 75, 100);
+  ad2 = \middle(a, d);
+  bc2 = \middle(b, c);
+
+  \border(ab1, dc1);
+  \border(ab3, dc3, -10, -10);
+
+  \border(ad2, bc2, [ab1, dc1], [ab3, dc3]);
+  \debug_point;
+  \eps("border_all_limits.eps", 200, 480, 390, 655);
+}
+
+%----------------------------------------
+% return arrow (two fig -> two steps)
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  m1 = \fraction(a,d, 40, 100);
+  m2 = \fraction(b,c, 60, 100);
+  o = \middle(m1, m2);
+  o2 = \perpendicular([m1, m2], o, [a, b]);
+  o1 = \middle(o, o2);
+
+  \fold(o, o2);
+  \cut([o, o2], o1);
+  \space_fold([o, o1], 10, 0);
+  \space_fold([o2, o1], 10, 0);
+  \mountain_fold(m1, m2);
+  \debug_point;
+  \eps("return_arrow1.eps");
+}
+
+\step {
+  \reset;
+  \square(a,b,c,d);
+  m1 = \fraction(a,d, 40, 100);
+  m2 = \fraction(b,c, 60, 100);
+
+  \mountain_fold(m1, m2);
+  \return_arrow([m1, m2], [a,b], none, mountain, left);
+  \debug_point;
+  \eps("return_arrow2.eps", 210, 490, 380, 655);
+}
+
+%----------------------------------------
+% open_arrow (squash fold)
+%----------------------------------------
+\step { \label(startRepeat); % used in repeat_arrow2.eps
+  \reset;
+  \diamond(a,b,c,d);
+  o = \middle(d, b);
+  \border(b,d);
+  \move(a,c);
+  \shift(c, -1, 0);
+  \shift(a, 2, 0.5);
+  \border(b, c, [a,d]);
+  \valley_fold(a, o);
+  \fold(o, c, [a,d], 5);
+  ad = \middle(a,d);
+  cd = \middle(c,d);
+  \mountain_fold(ad, o);
+  \valley_fold(cd, o, -10, [d,a]);
+  \simple_arrow(d, a, none, valley, left);
+  \open_arrow([d, a]);
+  \fill(back, a, b, d);
+  \eps("open_arrow.eps", 210, 470, 380, 590);
+}
+
+%----------------------------------------
+% push_arrow (reverse fold)
+%----------------------------------------
+\step {
+  \reset;
+  \square(a,b,c,d);
+  ad = \middle(a,d);
+  bc = \middle(b,c);
+  \cut([a,d], ad);
+  \cut([b,c], bc);
+  \border(ad, bc);
+  \move(a,d);
+  \move(b,c);
+  \shift(a, 2, 1);
+  \shift(d, -1, 0);
+  \shift(b, 2, 1);
+  \shift(c, -1, 0);
+  \border(bc, c, [a,b]);
+  cd = \middle(c,d);
+  ab = \middle(a,b);
+  ad_bc = \middle(ad, bc);
+  \fold(ab, ad_bc, 5, 0);
+  \fold(cd, ad_bc, 5, [a,b]);
+  \fill(back, a, b, bc, ad);
+  \mountain_fold(b, ad_bc);
+  \valley_fold(c, ad_bc, -10, [a, b]); 
+  \push_arrow(bc, 45);
+  \mountain_fold(a, ad_bc);
+  \valley_fold(d, ad_bc, -10, [a, ad]); 
+  \push_arrow(ad, 135);
+  \eps("push_arrow.eps", 210, 490, 380, 600);
+}
+
+%----------------------------------------
+% repeat_arrow 
+%----------------------------------------
+\step {  \label(endRepeat); % used in repeat_arrow2.eps
+  \reset;
+  \square(a,b,c,d);
+  ad = \middle(a,d);
+  bc = \middle(b,c);
+  \cut([a,d], ad);
+  \cut([b,c], bc);
+  \border(ad, bc);
+  \move(a,d);
+  \move(b,c);
+  \shift(a, 2, 1);
+  \shift(d, -1, 0);
+  \shift(b, 2, 1);
+  \shift(c, -1, 0);
+  \border(bc, c, [a,b]);
+  cd = \middle(c,d);
+  ab = \middle(a,b);
+  o = \middle(ad, bc);
+  \fold(ab, o, 5, 0);
+  \fold(cd, o, 5, [a,b]);
+  \fill(back, a, b, bc, ad);
+  [i1, i2] = \line_to_line([a, b], [ad, bc], [a, ad], [b, bc]);
+  \valley_fold(i1, i2);
+  \simple_arrow(ab, o, none, valley, left);
+  \repeat_arrow(cd);
+  \eps("repeat_arrow1.eps", 210, 470, 380, 600);
+}
+
+\step{
+ \reset;
+ \diamond(a,b,c,d);
+ [bc, o1] = \rabbit_ear(a,b,c, [b,c]);
+ \border(a,o1);
+ \border(b, o1);
+ \border(c, o1);
+ \cut([b,c], bc);
+ \move(b, [o1, bc]);
+ \move(b, [o1, c]);
+ \move(bc, [o1, c]);
+ \border(o1, bc, [a, b]);
+
+ ab = bc;
+ abb = \line_to_line(o1, b, ab, [ab, b]);
+ \cut([a,b], ab);
+ \cut([ab, b], abb);
+ bcb = abb;
+ \cut([bc, b], bcb);
+ \move(b, [abb, o1]);
+ \move(abb, [ab, o1]);
+ \border(abb, o1);
+ \border(bcb, o1);
+ \fold(b, o1);
+ \border(ab, a, [abb, o1], 0);
+ \border(bc, c, [bcb, o1], 0);
+ \hide([ab, abb]);
+ \hide([bc, bcb]);
+
+ abbo1 = \line_to_line(b, abb, o1, [abb, o1]);
+ bcbo1 = \line_to_line(b, bcb, o1, [bcb, o1]);
+ \cut([abb, o1], abbo1);
+ \cut([bcb, o1], bcbo1);
+ \border(b, abbo1);
+ \border(b, bcbo1);
+ \hide(abb, bcb);
+ \border(ab, a, [b, abbo1], 0);
+ \border(bc, c, [b, bcbo1], 0);
+ \fold(abbo1, bcbo1);
+ \fill(front, a, d, c);
+ \fill(back, a, o1, c);
+ \fill(back, b, abbo1, o1, bcbo1);
+ dd = d;
+ \shift(dd, 13, 3);
+ \repeat_arrow(dd, startRepeat, endRepeat, 1, 135);
+ \eps("repeat_arrow2.eps", 180, 480, 340, 655);
+}
+
+%----------------------------------------
+% rabbit_ear
+%----------------------------------------
+\step {
+  \reset;
+  \diamond(a,b,c,d);
+  \fold(a,c);
+  [bc, o1] = \rabbit_ear(b, c, a);
+  \valley_fold(a, o1);
+  \valley_fold(b, o1);
+  \valley_fold(c, o1);
+  \mountain_fold(bc, o1);
+  \debug_point;
+  \eps("rabbit_ear1.eps", 190, 460, 410, 680);
+}
+
+\step {
+  \cut([b,c], bc);
+  \move(b, [bc, o1]);
+  \move(b, [c, o1]);
+  \move(bc, [c, o1]);
+  \shift(b, 1.5, 0);
+  \border(a, o1);
+  \border(c, o1);
+  \border(b, o1);
+  \border(b, bc);
+  \border(o1, bc, [a, b], 0);
+  \fill(back, a, o1, b);
+  \fill(back, bc, c, o1, b);
+  \eps("rabbit_ear11.eps", 190, 460, 340, 680);
+}
+
+\step {
+  \reset;
+  \square(a,b,c,d);
+  ab = \middle(a,b);
+  o = \intersection(a,c, b,d);
+  bc = \rabbit_ear(c, ab, d, o, [b, c]);
+  \valley_fold(ab, o);
+  \valley_fold(c, o);
+  \valley_fold(d, o);
+  \mountain_fold(bc, o);
+  \debug_point;
+  \eps("rabbit_ear2.eps");	
+}
+
+\step {
+  \cut([b,c], bc);
+  \cut([a, b], ab);
+  \move(c, [bc, o]);
+  \move(c, [ab, o]);
+  \move(bc, [ab, o]);
+  \move(b, [ab, o]);
+  \shift(a, -1.4, -0.5);
+  \shift(c, 1.5, -0.5);
+  \border(c, o);
+  \border(ab, o);
+  \border(d, o);
+  \border(a, ab, 0, [b, bc]);
+  \border(bc, o, 0, [c,d]);
+  \fill(back, d, c, o);
+  \fill(\darker(back), b, bc, c, o, ab);
+  \eps("rabbit_ear21.eps", 180, 480, 320, 655);	
+
+}
+
+% NOTE : eps produces eps with default boundaries
+%        left   : 210
+%        bottom : 480
+%        right  : 380
+%        top    : 655

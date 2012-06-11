@@ -1,0 +1,349 @@
+% pajarita
+
+% a macro to choose my color
+\define \my_color { 
+	100, 85, 72
+}
+
+\diagram_header { 
+  \designer("Unknown");
+  \title("Pajarita");
+  \diagrammer("Xavier Fouchet");
+  \diagram_date(2001);
+  \comment("Level : beginner");
+  \comment("Paper with same color on both sides");
+  \color_front(\my_color);
+  \color_back(\my_color);
+}
+
+\step {		%1
+	\square(a,b,c,d);
+	\valley_fold(a,c);
+	\valley_fold(b,d);
+	\simple_arrow(a, c, valley, unfold, right);
+	\simple_arrow(d, b, valley, unfold, right);
+	o = \intersection([a,c], [b,d]);
+
+	\caption("Fold unfold diagonals");
+	\fill(front, a, b ,c ,d);
+}
+
+\step {		%2
+	ab = \middle(a,b);
+	bc = \middle(b,c);
+	cd = \middle(c,d);
+	da = \middle(d,a);
+	\valley_fold(ab,bc);
+	\valley_fold(bc,cd);
+	\valley_fold(cd,da);
+	\mountain_fold(da,ab);
+	\simple_arrow(b, o, none, valley, right);
+	\simple_arrow(c, o, none, valley, right);
+	\simple_arrow(d, o, none, valley, right);
+	\return_arrow([da,ab],[a,b], none, mountain, right);
+	a1=\middle(da,ab);
+	b1=\middle(ab,bc);
+	c1=\middle(bc,cd);
+	d1=\middle(cd,da);
+	\cut([a,c],a1);
+	\cut([a1,c],c1);
+	\cut([b,d],b1);
+	\cut([d,b1],d1);
+	\cut([a,b],ab);
+	\cut([b,c],bc);
+	\cut([c,d],cd);
+	\cut([d,a],da);
+	\caption("Make almost a blintz base");
+	\caption("(one corner is folded backwards)");
+
+}
+
+\step {		 %3
+	\move(a,o);
+	\move(b,o);
+	\move(c,o);
+	\move(d,o);
+	\border(ab,bc);
+	\border(bc,cd);
+	\border(cd,da);
+	\border(da,ab);
+	
+	\valley_fold(a1,b1);
+	\valley_fold(b1,c1);
+	\valley_fold(c1,d1);
+	\valley_fold(d1,a1);
+	\simple_arrow(ab,o, none, valley, right);
+	\simple_arrow(bc,o, none, valley, right);
+	\simple_arrow(cd,o, none, valley, right);
+	\simple_arrow(da,o, none, valley, right);
+	\shift(b,1,1);
+	\shift(c,1,-1);
+	\shift(d,-1,-1);
+	\hide([a,ab]);
+	\hide([a,da]);
+	\hide([a,a1]);
+	\fold(c1,a1,[c,bc],10);
+	\fold(d1,b1,[da,d],[b,ab]);
+	\caption("Here is a complete blintz");
+	\unfill(a, b ,c ,d);
+	\fill(front,ab,bc,cd,da);
+	\fill(back,ab,bc,b);
+	\fill(back,bc,cd,c);
+	\fill(back,cd,da,d);
+}
+
+\scale(200);
+
+\step {		   %4
+	\cut([da,ab],a1);
+	\cut([ab,bc],b1);
+	\cut([bc,cd],c1);
+	\cut([cd,da],d1);
+	\hide([b,ab]);
+	\hide([b,bc]);
+	\hide([c,bc]);
+	\hide([c,cd]);
+	\hide([d,cd]);
+	\hide([d,da]);
+	aab=\middle(a,ab);
+	ada=\middle(a,da);
+	bab=\middle(b,ab);
+	bbc=\middle(b,bc);
+	cbc=\middle(c,bc);
+	ccd=\middle(c,cd);
+	dcd=\middle(d,cd);
+	dda=\middle(d,da);
+	\unshift(aab);
+	\unshift(ada);
+	\unshift(bab);
+	\unshift(bbc);
+	\unshift(cbc);
+	\unshift(ccd);
+	\unshift(dcd);
+	\unshift(dda);
+	\cut([a,ab],aab);
+	\cut([a,da],ada);
+	\cut([b,ab],bab);
+	\cut([b,bc],bbc);
+	\cut([c,bc],cbc);
+	\cut([c,cd],ccd);
+	\cut([d,cd],dcd);
+	\cut([d,da],dda);
+	\move(ab,o);
+	\move(bc,o);
+	\move(cd,o);
+	\move(da,o);
+	\border(a1,b1);
+	\border(b1,c1);
+	\border(c1,d1);
+	\border(d1,a1);
+	\shift(ab,0,3);
+	\shift(bc,3,0);
+	\shift(cd,0,-3);
+	\shift(da,-3,0);
+	\show([ab,aab]);
+	\show([da,ada]);
+	\hide([a,ada]);
+	\hide([a,aab]);
+	\hide([bab,ab]);
+	\border(bab,b,[ab,b1],0);
+	\border(bbc,b,[b1,bc],0);
+	\hide([bbc,bc]);
+	\border(cbc,c,[bc,c1],0); 
+	\hide([ccd,cd]);
+	\border(ccd,c,[cd,c1],0);
+	\hide([cd,dcd]);
+	\border(dcd,d,[cd,d1],0);
+	\hide([dda,da]);
+	\border(dda,d,[da,d1],0);
+	\fold(c1,a1,[c,cbc],0);
+	\fold(b1,d1,[b,bbc],[d,dcd]);
+	
+	%\debug_point(c,cd,ccd);
+	\caption("(Enlarged view)");
+	\unfill(ab,bc,cd,da);
+	\unfill(ab,bc,b);
+	\unfill(bc,cd,c);
+	\unfill(cd,da,d);
+	\fill(front,a1,b1,c1,d1);
+	\fill(back,bab,ab,b1);
+	\fill(back,bab,b1,bbc,b);
+	\fill(back,b1,bc,c1);
+	\fill(back,cbc,c,ccd,c1);
+	\fill(back,c1,cd,d1);
+	\fill(back,dda,d1,dcd,d);
+	\fill(back,dda,da,d1);
+}
+
+\step {		   %5
+	\mountain_fold(a1,c1);
+	\return_arrow([a1,c1],[a1,b1], none, mountain, right);
+	\caption("Fold along diagonal. Tuck the head outside");
+}
+
+\scale(150);
+
+\step {		  %6
+	na=\symmetry(a,[a1,d1]);
+	\move(b1,d1);
+	\move(cbc,ccd);
+	\move(bab,dda);
+	\move(aab,ada);
+	\move(a,na);
+	\show(a,ada);
+	\hide(b);
+	\hide(ab);
+	\hide(bc);
+	\hide(cbc);
+	\shift(b1,-2,1);
+	\shift(c,1,1);
+	\border(c,c1);
+	\border(c1,a1,[c,ccd],0);
+	\border(c1,b1,[a1,d1],0);
+	\border(a,a1);
+	\border(a1,d1,[a,ada]);
+	\border(a1,b1,[a,ada]);
+	\fold(a1,ada,10,10);
+	\cut([d1,b1],o);
+	\hide([d1,o]);
+	\fold(o,b1,[a1,d1],3);
+	
+	ncd=\symmetry(cd,[d1,c1]);
+	\simple_arrow(cd, ncd, none, valley, right);
+	\simple_arrow(da, a, none, valley, right);
+	%\debug;
+
+	\caption("Slighly open two flaps");
+	\unfill(a1,b1,c1,d1);
+	\unfill(bab,ab,b1);
+	\unfill(bab,b1,bbc,b);
+	\unfill(b1,bc,c1);
+	\unfill(cbc,c,ccd,c1);
+	\unfill(c1,cd,d1);
+	\unfill(dda,d1,dcd,d);
+	\unfill(dda,da,d1);
+	\fill(back,a1,b1,c1);
+	\fill(front,a1,d1,c1);
+	\fill(back,ccd,c,c1);
+	\fill(back,cbc,c,ccd,c1);
+	\fill(back,c1,cd,d1);
+	\fill(back,dda,d1,dcd,d);
+	\fill(back,dda,da,d1);
+	\fill(front,a,ada,da,a1);
+}
+
+\step {		 %7
+	\shift(cd,3,-8);
+	\shift(da,-8,-3);
+	\border(ccd,c,[d1,cd],0);
+	\border(dda,d,[da,a1],0);
+	\mountain_fold(d,d1);
+	
+	\simple_arrow(d, ncd, none, valley, right);
+	\caption("Pull out the inner flap downwards");
+	\caption("and close the flaps opened at step 6");
+	
+	\fill(\darker(\darker(back)),d1,da,a1);
+	\fill(\darker(\darker(front)),a1,da,ada);
+	\fill(\darker(\darker(back)),d1,cd,c1);
+}
+
+\step {		 %8
+	\move(d,ncd);
+	\move(dda,ccd);
+	\shift(cd,0,-1);
+	\shift(da,-1,0);
+	\hide(d);
+	\fold(da,d1,10,10);
+	\border(d,da);
+	\border(d,d1);
+	\border(d,cd);
+	\border(d,da);
+	\border(d1,c1,[d,cd],0);
+	\border(ccd,c,[c1,cd],0);
+	\border(c1,b1,[d1,a1],0);
+	\fold(d1,dda);
+	\border(d1,cd,[d,da],0);
+	
+	\caption("Repeat steps 6-7 behind");
+	%\debug;
+	\unfill(dda,d1,dcd,d);
+	\unfill(a,ada,da,a1);
+	\unfill(dda,da,d1);
+	\unfill(d1,da,a1);
+	\unfill(a1,da,ada);
+	\unfill(d1,cd,c1);
+	\fill(back,d1,cd,c1);
+	\fill(front,d1,cd,d);
+	\fill(back,a1,d1,d,da);
+	\fill(front,a,ada,da,a1);
+}
+
+\step {		 %9
+	\move(b,d);
+	\move(bab,dda);
+	\shift(b,-2,1);
+	\border(b,b1);
+	\border(ab,b,[d,d1],0);
+	%\xray_fold(cd,c1);
+	%\border(c,ccd);
+	nc=\symmetry(a,[d,da]);
+	\simple_arrow(c,nc, none, valley, left);
+	\caption("Pull out the tail and rotate");
+	\fill(back,b1,bab,b);
+}
+
+\rotate(-45);
+
+\step {		 %10
+	\hide(c,ccd);
+	\move(c,nc);
+	nccd=\middle(cd,nc);
+	\move(ccd,nccd);
+	\border(c,cd);
+	\border(c1,a1,[c,cd],0);
+	\border(c,c1);
+	\fold(cd,c1);
+	\fold(ccd,c1);
+	\shift(b1,-1,1);
+	\shift(b,-1,1);
+	%\debug;
+	
+	\caption("Finished model");
+	\unfill(ccd,c,c1);
+	\unfill(cbc,c,ccd,c1);
+	\fill(back,cd,c1,c);
+}
+
+\step {     %11
+	\scale(300);
+	\visible_area_height(150);
+	\hide(b1);
+	\shift(ada,-2,0);
+	\shift(b,4,1);
+	\shift(b1,4,1);
+	\shift(cd,-1,-2);
+	\border(b1,b,[d,cd],0);
+	\border(bc,b,[d1,c1],0);
+	\border(ab,b,[d1,c1],0);
+	\shift(bc,1,0);
+	\border(c,bc);
+	\shift(ab,3,0);
+	\border(a1,ab);
+	\border(d1,bc,[a1,c1],0);
+	\shift(bab,4,1);
+	\border(bab,ab,[c,bc],0);
+	\hide([a,aab]);
+	\caption("TADA !!!");
+	% we fill all again because changing viewpoint
+	\unfill;
+	\fill(front,a1,b1,b,ab);
+	\fill(back,b1,b,bc);
+	\fill(front,bc,b1,c1,c);
+	\fill(front,a1,b1,c1);
+	\fill(back,c1,d1,cd,c);
+	\fill(front,d1,d,cd);
+	\fill(back,a1,da,d,d1);
+	\fill(front,a,ada,da,a1);
+	
+}

@@ -1,0 +1,288 @@
+%---------------------------%
+%                           %
+%   Title:   mrc_petal.doo  %
+%   Author:  Jérôme Gout    %
+%   Date:    22 June 2001   %
+%                           %
+%---------------------------%
+ 
+\diagram_header { 
+  \designer("Valerie Vann");
+  \title("Magic Rose Cube - Petals");
+  \diagramer("Jerome Gout");
+  \diagram_date(2001);
+  \comment("This diagram has been made for a personnal usage only. Do not distribute this diagram as Valerie's request.");
+  \comment("Use 6 square, 3 for leaves (green) and 3 for rose petals (rose, yellow or red).");
+  \comment("Difficulty : Intermediate - for a 10cm initial squares you'll get a ~4cm cube - Color behind");
+  \bottom_margin(15);
+  \color_front(white);
+  \color_back(100, 41, 71);
+}
+
+\visible_area_height(60);
+
+\step {
+  \caption("Begin with leaves.");
+  \caption("Just pinch half");
+
+  \square(a,b,c,d);
+
+  [ab2, cd2] = \line_to_line([b,c], [a,d], [a,b], [c,d]);
+  o = \middle(ab2,cd2);
+  [bc2, ad2] = \line_to_line([a,b], [c,d], [b,c], [a,d]);
+  \valley_fold(ab2, o, 0, 75);
+  \valley_fold(cd2, o, 0, 75);
+  \simple_arrow(bc2, ad2, unfold, valley, right);
+
+  % original front color
+  \fill(front, a, b, c, d);
+}
+
+\step {
+  % to avoid the implicit extremities computation
+  % (only 5% by default are left)
+  \space_fold([ab2, o], 5, 75);
+  \space_fold([cd2, o], 5, 75);
+  \caption("Fold unfold vertical quarters.");
+  [ab1, cd1] = \line_to_line([a,d], [ab2, o], [a,b], [c,d]);
+  [ab3, cd3] = \line_to_line([b,c], [ab2, o], [a,b], [c,d]);
+
+  \valley_fold(ab1, cd1);
+  \simple_arrow(ad2, [ab1, cd1], unfold, valley, left);
+  \valley_fold(ab3, cd3);
+  \simple_arrow(bc2, [ab3, cd3], unfold, valley, right);
+}
+
+\step {
+ \caption("Fold and unfold right top bissector");
+ bc1 = \line_to_line(ab1, cd1, b,  [b,c]);
+ \valley_fold(bc1, ab1);
+ \simple_arrow(b, [bc1, ab1], unfold, valley, right);
+}
+
+\step {
+ \caption("Fold left bottom bissector");
+
+ ad1 = \line_to_line(cd3,d, ab3, [a,d]);
+ \valley_fold(ad1, cd3);
+ \simple_arrow(d, [ad1, cd3], none, valley, left);
+ i1 = \inter_cut([ab1, cd1], [ad1, cd3]);
+ \cut([c,d], cd3);
+ \cut([d,a], ad1);
+}
+
+\step {
+ % do not forget to cut the bottom pinch 
+ % to make it move in the next step
+ i2 = \inter_cut([o, cd2], [ad1, cd3]);
+ \caption("Fold corner using horizontal crease.");
+ % moving points
+ \move(d, [ad1, cd3]);
+ \move(cd2, [ad1, cd3]);
+ \move(cd1, [ad1, cd3]);
+ % hiding the bissector made in step 3 ([ab1, bc1])
+ % we cut it in half
+ i3 = \middle(ab1, bc1);
+ \cut([ab1, bc1], i3);
+ % each half is redrawn masking the i3 extremity to the border
+ % of the upper layer
+ \fold(i3, ab1, [d, ad1], 5);
+ \fold(i3, bc1, [d, cd3], 5);
+ % hide the behind part of the bottom pinch
+ \hide([o, i2]);
+ % redraw the pinch correctly
+ \fold(i2, cd2, 40, 20);
+ % redraw left existant fold made in step 2
+ % it is partially hidden by the top layer
+ \fold(i1, ab1, [ad1, d], 10);
+ % make the fold line bacoming a border
+ \border(ad1, cd3);
+ % fill the upper layer
+ \fill(back, ad1, d, cd3);
+ % fill the front side also
+ \unfill(a,b,c,d);
+ \fill(front, a, ad1, d, cd3, c, b);
+ 
+ % new fold of this step
+ i4 = \line_to_line(cd1, d, o, [ad1, d]);
+ \valley_fold(i4, cd1);
+ \simple_arrow(d, o, none, valley, right);
+ % preparing the move of the next step
+ \cut([ad1, d], i4);
+ \cut([d, cd3], cd1);
+ % since [ad1, d] was a limit for [i1, ab1] 
+ % this edge should be redrawn
+ \fold(i1, ab1, [ad1, i4], 7);
+}
+
+\step {
+ \unfill(ad1, d, cd3); % back
+ \unfill(a, ad1, d, cd3, c, b); % front
+ \move(d, o);
+ % fold line becomes broder
+ \border(i4, cd1);
+ % fill layers
+ \fill(back, ad1, i4, d, cd1, cd3);
+ \fill(front, a, ad1, i4, d, cd1, cd3, c, b);
+ 
+ % new folds (swivel fold)
+ \caption("Swivel fold.");
+ \valley_fold(i1, cd1, -20, -20);
+ \mountain_fold(i4, i1);
+ % concerning [ab1, i1]: we want show in xray the hidden part
+ % of the fold. So we have to cut this edge.
+ i5 = \inter_cut([ab1, i1], [ad1, i4]);
+ \valley_fold(ab1, i5);
+ \xray_fold(i5, i1);
+ % make the arrow to show the move
+ \simple_arrow(ad1, i4, none, valley, left);
+ \simple_arrow(i4, i2, none, valley, right);
+
+ % preparing the move of the next step
+ \cut([a, b], ab1);  % a moving
+ \cut([ad1, i4], i5); % ad1 moving
+ \cut([ad1, cd3], i1); 
+}
+
+\scale(110);
+
+\step {
+ % unfill to make it clearer
+ \unfill(ad1, i4, d, cd1, cd3); % back
+ \unfill(a, ad1, i4, d, cd1, cd3, c, b); % front
+ % apply previous folds
+ \move(a, ab2);
+ \move(ad1, i4);
+ \move(i4, i2); % becarful to the order i4 is first used and then moved
+ \move(i5, d);
+ % vertical fold line becomes border
+ % this fold has been cut in previous step to make xray and valley
+ \border(ab1, i1);
+ % hide masked creases
+ \fold(ab1, i3, [ab2, o], 0);
+ \hide([ab1, i5]);
+ \hide([i1, cd1]);
+ % restore bissector made in step 3
+ \fold(i3, bc1, 0, 5);
+ % border becomes fold
+ \fold(i1, ad1);
+ % fill faces
+ \fill(back, ab1, a, i2, i1);
+ \fill(back, cd1, cd3, i2);
+ \fill(front, a, i2, cd1, cd3, c, b);
+
+ % new fold
+ % new folds (swivel II)
+ \caption("All folds exist expect the right one.");
+ \caption("White upper right part should go behind left green layer.");
+ \caption("You can open slightly the green upper left layer.");
+ \mountain_fold(ab3, cd3);
+ i7 = \symmetry(ad1, [ab3, cd1]);
+ \valley_fold(cd1, i7);
+ \valley_fold(i3, bc1, 0, -30);
+ % because we want show a wray fold under the left layer
+ % we have to cut the edge [ab1, i3] made in step 5
+ \cut([ab1, i3], ad1);
+ \xray_fold(ab1, ad1);
+ \valley_fold(ad1, i3);
+ \simple_arrow(ab3, i1, none, valley, right);
+ \simple_arrow(bc1, i2, none, valley, left);
+
+ % preparing the move of the next step
+ \cut([i3, bc1], cd1);
+ \cut([ab1, b], ab3);
+ \cut([b, c], i7);
+ \cut([i7, c], bc1);
+\debug_point;
+}
+
+\step {
+ % unfill front color
+ \unfill(a, i2, cd1, cd3, c, b);
+ % unfill central triangle
+ \unfill(cd1, cd3, i2);
+ % apply previous fold
+ \move(b, a);
+ \move(b, [ab1, ad1]);
+ \move(ab3, i1);
+ \move(bc1, i2);
+ \move(i7, ad1);
+ \move(c, [cd1, cd3]);
+ % a border is partially hidden by bottom right layer
+ \border(cd3, i1, [c, bc1]);
+ % border is now a fold
+ \fold(i2, cd1);
+ % hide initial pinch
+ \hide([i2, cd2]);
+ % and horizontal border which is now behind top layer
+ \hide([d, cd1]);
+ \hide([b, i7]);
+ \hide(ab2);
+ % fold line becomes border
+ \border(ad1, cd1);
+ % fill the right half part
+ \fill(back, ad1, cd1, cd3, c);
+
+ % new folds
+ \caption("Mountain fold unfold to form lockers.");
+ \caption("Let them at 90 degres backwards.");
+ \mountain_fold(cd3, bc1);
+ \mountain_fold(ab1, i7);
+ \return_arrow([cd3, bc1], [c, cd3], unfold, mountain, left);
+ \return_arrow([ab1, i7], [i7, a], unfold, mountain, right);
+}
+
+% turn the model and change the scale
+\rotate(45);
+\scale(150);
+
+\step {
+ % unfill all
+ \unfill(ad1, cd1, cd3, c);
+ \unfill(ab1, a, i2, i1);
+ % move top and bottom corner to make them backwards
+ \shift(a, 0, -7);
+ \shift(c, 0, 7);
+ % fill the lockers
+ \fill(\darker(back), a, ab1, ad1);
+ \fill(\lighter(back), c, bc1, cd3);
+ % fill the central face
+ \fill(back, ab1, i7, cd1, cd3, ab3);
+
+ % new folds
+ \caption("Fold back both lockers to 90 degres.");
+ \hide(i4, i2, b, i1); % this is to clarify the model
+ \border(ab3, bc1); % this is to clarify the model
+ \mountain_fold(i7, ab3, -20, -20);
+ \mountain_fold(cd1, bc1, -20, -20);
+ \return_arrow([i7, ab3], [ab1, ab3], none, mountain, left);
+ \return_arrow([cd1, bc1], [cd1, cd3], none, mountain, left);
+}
+
+\step {
+ % unfill face
+ \unfill(ab1, i7, cd1, cd3, ab3);
+  % fold lines become border
+ \border(ab3, i7);
+ \border(bc1, cd1);
+ % move again a and c
+ \shift(a, 12, -5);
+ \shift(c, -3,12);
+ % fill triangles of lockers
+ \fill(\darker(\darker(back)), a, ab1, ad1);
+ \fill(\darker(back), c, bc1, cd3);
+ % make the model 3D again
+ \shift(ab1, 14, 4);
+ \shift(cd3, -10, 6);
+
+ \scale(180);
+
+ % fill each face correctly
+ \fill(back, i7, cd1, bc1, ab3);
+ \fill(\darker(back), ab1, i7, ab3);
+ \fill(\lighter(back), cd1, cd3, bc1);
+ \caption("Finished Magic Rose Cube petal.");
+ \caption("The inner square will be a cube face.");
+ \caption("Its diagonal will guide the assembly");
+ \caption("Make three modules like this.");
+}

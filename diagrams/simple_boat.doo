@@ -1,0 +1,349 @@
+%----------------------------%
+%                            %
+%   Title:   simple_boat.doo %
+%   Author:  Xavier Fouchet  %
+%   Date:    August 2001     %
+%                            %
+%----------------------------%
+ 
+\define \my_color { 
+        60, 85, 60
+}
+
+\diagram_header { 
+  \designer("Traditional");
+  \title("Simple boat");
+  \diagramer("Xavier Fouchet");
+  \diagram_date(2001);
+  \comment("Level : beginner");
+  \comment("Paper : A4");
+  \color_front(\my_color);
+  \color_back(90,70,90);
+}
+
+\step {		%1
+	\vertical_rectangle(a,b,c,d,A);
+	ad=\middle(a,d);
+	bc=\middle(b,c);
+	\valley_fold(ad,bc);
+	\simple_arrow(a, d, none, valley, left);
+	\caption("Fold horizontally in half");
+	\fill(back, a, b ,c ,d);
+}
+
+\step {		%2
+
+	\cut([a,d],ad);
+	\cut([b,c],bc);
+	\move(a,d);
+	\move(b,c);
+	\hide([bc,c]);
+	\border(ad,bc);
+	\shift(d,-2,2);
+	\border(d,c,0,[a,ad]);
+	\unfill(a, b ,c ,d);
+	
+	o=\middle(ad,bc);
+	ab=\middle(a,b);
+	\valley_fold(o,ab);
+	\simple_arrow(a, b, valley, unfold, right);
+
+	center=\middle(ad,b);
+	\visible_area_center(center);
+	\caption("Fold and unfold in half again");
+
+	%\unfill(a, b ,c ,d);
+	\fill(back, d,c,bc,ad);
+	\fill(front, a,b,bc,ad);
+}
+
+\step {		%3
+	aad=\point_to_line(ad,o,[o,ab],[a,ad]);
+	\valley_fold(aad,o);
+	\simple_arrow(ad,[aad,o], none, valley, right);
+	bbc=\point_to_line(bc,o,[o,ab],[b,bc],second);
+	\valley_fold(bbc,o);
+	\simple_arrow(bc,[bbc,o], none, valley, left);
+	\cut([ad,bc],o);
+	\caption("Fold upper corners along middle line");
+}
+
+\scale(150);
+
+\step {		%4
+	\cut([ad,a],aad);
+	\cut([ad,d],aad);
+	\cut([bc,c],bbc);
+	\cut([bc,b],bbc);
+	\shift(d,0,0);
+	\move(ad,[o,aad]);
+	\move(bc,[o,bbc]);
+	\hide([d,c]);
+	%\hide([o,aad]);
+	%\hide([o,bbc]);
+	\border(o,aad);
+	\border(o,bbc);
+	\shift(ad,-1,1);
+	\shift(bc,1,1);
+	%\debug();
+	\valley_fold(aad,bbc,-10,-10);
+	\simple_arrow(ab,[aad,bbc],none,valley,right);
+	oab=\intersection(o,ab,aad,bbc);
+	
+	\visible_area_center(oab);
+	\caption("Fold lower flap upwards");
+	\caption("Repeat behind");
+	%\unfill();
+	\unfill(d,c,bc,ad);
+	\fill(front,a,b,bbc,o,aad);
+}
+
+\step {		%5
+	\cut([a,b],ab);
+	\hide([aad,ad]);
+	\hide([bbc,bc]);
+	\move(a,[aad,bbc]);
+	\move(b,[aad,bbc]);
+	\move(c,[aad,bbc]);
+	\move(d,[aad,bbc]);
+	\move(ab,[aad,bbc]);
+	\border(o,aad,0,[a,ab]);
+	\border(o,bbc,0,[ab,b]);
+	\border(o,ad,0,[a,ab]);
+	\border(o,bc,0,[ab,b]);
+	\border(aad,bbc);
+	\shift(d,-1,1);
+	\shift(c,-1,1);
+	cd=\middle(c,d);
+	ocd=\middle(aad,bbc);
+	\shift(cd,-1,1);
+	\cut([c,d],cd);
+	\cut([o,ab],oab);
+	%\hide([oab,ab]);
+	\hide(oab);
+	\mountain_fold(o,oab,-10,-10);
+	\border(d,cd,0,[o,aad]);
+	\border(cd,c,[o,bbc],0);
+	\border(c,bbc,0,[ab,b]);
+	%\fold(oab,ab);
+	
+	\visible_area_center(ab);
+	%\cut([aad,bbc],oab);
+	%\shift(oab,0,2);
+	%\simple_arrow(oab,ab,none, valley, right);
+	\caption("Open the bottom of the model...");
+
+	\fill(front,d,cd,c,bbc,oab,aad);
+	\fill(back,a,ab,b,bbc,ocd,aad);
+}
+
+\visible_area_center(ab);
+
+\step {		%6
+	\hide(c);
+	\hide(d);
+	\fold(o,oab,10,[a,ab]);
+	\cut([aad,bbc],oab);
+	\shift(oab,3,3);
+	\border(aad,bbc);
+	\cut([aad,bbc],ocd);
+	\shift(ocd,-2,-2);
+	\shift(ab,3,3);
+	\shift(bc,5,5);
+	\border(ocd,o,0,[aad,oab]);
+	\border(oab,ab,0,0);
+	
+	\simple_arrow(aad,bbc,none, valley, right);
+	\simple_arrow(oab,[o,bbc],none, valley, left);
+	\caption("Intermediate step");
+	\caption("(If you stop here, you get a very nice hat...)");
+
+	\unfill(d,cd,c,bbc,oab,aad);
+	\fill(back,aad,ocd,bbc,oab);
+}
+
+\step {		%7
+	\show(d);
+	\move(aad,bbc);
+	\move(oab,[o,bbc]);
+	\hide([o,bc]);
+	\move(a,[o,ocd]);
+	\move(a,[o,bbc]);
+	\move(ab,[o,bbc]);
+	\move(ad,[o,bbc]);
+	\move(bc,[o,bbc]);
+	\move(b,[o,bbc]);
+	\move(d,[o,ocd]);
+	\shift(ocd,0,0);
+	\shift(d,0,0);
+	\shift(oab,0,0);
+	\shift(ocd,0,0);
+	\shift(ab,0,0);
+	\shift(bc,0,0);
+	\shift(c,0,0);
+	\shift(cd,0,0);
+	\hide([o,bbc]);
+	\hide([ab,b]);
+	%\border(o,aad,0,[d,cd]);
+	\border(a,ab);
+	\border(cd,d,0,[a,ab]);
+	\fold(o,aad,10,[a,ab]);
+	
+	\shift(a,0,1);
+	i=\intersection(a,ab,d,cd);
+	\visible_area_center(i);
+	\caption("... and lie it flat");
+	
+	%\unfill();
+	\fill(back,o,oab,aad,ocd);
+	\fill(front,o,ab,i,cd);
+}
+
+\rotate(-45);
+
+\step {		%8
+	\valley_fold(ocd,oab);
+	b1=\intersection(b,ab,ocd,oab);
+	f1=\intersection(c,cd,ocd,oab);
+	b2=\intersection(a,ab,ocd,oab);
+	f2=\intersection(d,cd,ocd,oab);
+	\simple_arrow(aad,[ocd,oab],none, valley, left);
+	\caption("Fold the flap upwards. repeat behind");
+
+}
+
+\step {		%9
+	\hide(a);
+	\hide(b);
+	\hide(c);
+	\hide(d);
+	\hide([oab,ab]);
+	p=\intersection(o,aad,ocd,oab);
+	\move(aad,[ocd,oab]);
+	\shift(aad,2,0);
+	\move(a,[ocd,oab]);
+	\move(b,[ocd,oab]);
+	\move(bbc,[ocd,oab]);
+	\shift(bbc,-2,0);
+	\border(o,oab,0,[aad,ocd]);
+	\border(bbc,oab,0,[o,ocd]);
+	\border(ocd,oab);
+	\border(ocd,o,0,0);
+	\border(aad,p);
+	\border(cd,f2,0,[aad,ocd]);
+	b12=\intersection(b,b1,bbc,ocd); 
+%	\shift(b12,1,-1);      % shift missing in intersection...
+	\border(b12,b1,0,[o,ocd]);
+	\caption("Open again the bottom of the model");
+	\caption("as in step 5");
+	\simple_arrow(p,[o,oab],none, valley, left);
+	\simple_arrow(ocd, oab, none, valley, right);
+
+	%unfill();
+	\unfill(aad,ocd,bbc,oab);
+	\unfill(a,ab,b,bbc,ocd,aad);
+	\unfill(a,b,bc,ad);
+	\unfill(a,b,bbc,o,aad);
+	\unfill(o,ab,i,cd);
+	\unfill(o,oab,aad,ocd);
+	\fill(back,bbc,ocd,oab);
+	\fill(front,o,ocd,oab);
+	\fill(back,cd,ocd,f2);
+	\fill(back,aad,ocd,p,oab);
+
+}
+
+\step {		%10
+	\cut([ocd,oab],p);
+	\border(ocd,oab);
+	p2=\middle(ocd,oab);
+	\cut([ocd,oab],p2);
+	\shift(p,3,3);
+	\shift(p2,-2,-2);
+	\border(p2,o,0,[ocd,p]);
+	\caption("Intermediate step");
+	\simple_arrow(p,[o,oab],none, valley, left);
+	\simple_arrow(ocd, oab, none, valley, right);
+	\unfill(aad,ocd,p,oab);
+	\unfill(cd,ocd,f2);
+	\fill(back,aad,ocd,p2,oab);
+}
+
+\scale(250);
+
+\step {		%11
+	\move(p,[o,oab]);
+	\move(ocd,[o,p2]);
+	\move(cd,[o,p2]);
+	\move(f1,[o,p2]);
+	\move(b2,[o,oab]);
+	\move(f2,[o,p2]);
+	\move(f2,[o,oab]);
+	\hide([b12,b1]);
+	\hide(cd);
+	\border(bbc,p2);
+	\border(o,p2,0,[bbc,ocd]);
+	\border(o,p,0,[aad,ocd]);
+	\border(f1,f2,[bbc,ocd],[aad,ocd]);
+	\fold(o,ocd,0,[f1,f2]);
+	\shift(p,0,0);
+	\shift(p2,0,0);
+	\shift(aad,0,3);
+	%\debug;
+	\caption("Lie flat");
+
+	\fill(front,o,p,ocd,p2);
+	\fill(back,f1,f2,ocd);
+	\fill(back,bbc,p2,ocd);
+	\fill(back,aad,p,ocd);
+}
+
+\rotate(-45);
+
+\step {		%12
+	ptg=\symmetry(oab,[p2,o]);
+	ptd=\symmetry(oab,[p,o]);
+	%\valley_fold(p,p2,[bbc,oab],[aad,oab]);
+	\shift(aad,2,2);
+	\shift(bbc,-2,2);
+	\xray_fold(p,p2);
+	\simple_arrow(bbc,ptg,none, valley, left);
+	\simple_arrow(aad,ptd,none, valley, right);
+	\caption("Pull left and right together");
+
+}
+
+\step {		%13
+	\move(oab,[p,p2]);
+	\move(ocd,[p,p2]);
+	\move(bbc,ptg);
+	\move(aad,ptd);
+	\hide(f1,f2);
+	\border(p,p2,0,0);
+	\shift(ocd,3,-6);
+	\shift(oab,-3,6);
+	\shift(o,0,3);
+	\shift(bbc,0,-3);
+	\shift(aad,0,3);
+	\shift(p2,0,-2);
+	\shift(p,0,2);
+	\fold(oab,p2,5,[bbc,ocd]);
+	\fold(oab,p,5,[aad,ocd]);
+        \fold(oab, ab, 5 ,[o, p2]);
+	\fold(ocd,p2,10,10);
+	\fold(ocd,p,10,10);
+	\border(oab, bbc);
+	\hide([o,ocd]);
+	\hide([o,aad]);
+	m=\middle(p,p2);
+	\fold(o,m,5,[bbc,ocd]);
+	\fold(ocd,m);
+%	\debug_point;
+	\visible_area_center(o);
+	
+	\caption("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	\caption("       ~~~~~~~~~~~~~~~~~~~~");
+	\unfill(f1,f2,ocd);
+	\fill(back,ocd,p,p2);
+
+}

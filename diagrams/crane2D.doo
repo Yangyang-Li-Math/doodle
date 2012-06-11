@@ -1,0 +1,207 @@
+\diagram_header { 
+  \designer("Anonymous");
+  \title("Traditional crane");
+  \diagrammer("Jerome Gout");
+  \diagram_date(2000);
+  \comment("Original author of this model is unknown. Crane origami cam from the origin of origami.");
+  \comment("Crane symbolises in chinese culture health.");
+  \comment("Difficulty : Simple - Begin with a 15cm square sheet - Color behind");
+  \bottom_margin(15);
+  \color_front(white);
+  \color_back(white);
+}
+
+\scale(80);
+%\clip;
+
+\step {
+  \diamond(a, b, c, d);
+  [mid_ab, mid_dc] = \line_to_line([b,c], [a,d], [a, b], [d,c]);
+  [mid_da, mid_bc] = \line_to_line([a, b], [d,c], [a,d], [b,c]);
+  \valley_fold(mid_ab, mid_dc);
+  \simple_arrow(mid_da, mid_bc, unfold, valley, right);
+  \valley_fold(mid_da, mid_bc);
+  \simple_arrow(mid_ab, mid_dc, unfold, valley, left);
+  \turn_over_vertical;
+  \caption("Fold unfold medians and return"); 
+}
+
+\step {
+  \fill(back, a,b,c,d);
+  \valley_fold(a, c);
+  \simple_arrow(b, d, unfold, valley, right);
+  \valley_fold(d,b);
+  \simple_arrow(a, c, unfold, valley, left);
+  \turn_over_vertical;
+  \caption("Fold unfold diagonals and return");
+}
+
+\step {
+  \unfill(a,b,c,d);
+  \mountain_fold(d, b);
+  \simple_arrow(a, c, none, valley, left);
+  \valley_fold(mid_ab, mid_dc);
+  \simple_arrow(b, c, none, valley, left);
+  \valley_fold(mid_da, mid_bc);
+  \simple_arrow(d, c, none, valley, right);
+  \caption("Make the preliminary base");
+}
+
+\step {
+  \fill(back, a,b,c,d);
+  \hide([d,b]);% hide horizontal diagonal
+  \hide(mid_ab, mid_da); % hide medians
+  bisec_acb = \point_to_line(b, c, [a, c], [a, b], first);
+  \valley_fold(bisec_acb, c);
+  \simple_arrow(b, [bisec_acb, c], unfold, valley, left);
+  bisec_acd = \point_to_line(d, c, [a, c], [a, d], second);
+  \valley_fold(bisec_acd, c);
+  \simple_arrow(d, [bisec_acd, c], unfold, valley, right);
+  o = \intersection([bisec_acb, bisec_acd], [a, c]);
+}
+
+% global centring
+\visible_area_center(o);
+\visible_area_height(75); % Each step is now 75 mm height
+
+\step {
+  \mountain_fold(bisec_acb, c);
+  \mountain_fold(bisec_acd, c);
+  \valley_fold(bisec_acb, bisec_acd);
+  a2 = \symmetry(c, [bisec_acb, bisec_acd]);
+  \simple_arrow(c, a2, none, valley, right);
+  \caption("Petal fold");
+}
+
+\step {
+  \fill(back, a2, bisec_acb, bisec_acd);
+  \cut([a,b], bisec_acb);
+  \cut([a,d], bisec_acd);
+  \hide(a);
+  \border(bisec_acb, c);	
+  \border(bisec_acd, c);
+  \border(bisec_acb, a2);	
+  \border(bisec_acd, a2);
+  \border(a2, c);	
+  \turn_over_vertical;
+}
+
+\step {
+  \hide([a2, c]);
+  \hide([bisec_acb, bisec_acd]);
+  \show(a);
+  \fold(a2, a);
+  
+  \valley_fold(bisec_acb, c);
+  \simple_arrow(b, [bisec_acb, c], unfold, valley, right);
+  \valley_fold(bisec_acd, c);
+  \simple_arrow(d, [bisec_acd, c], unfold, valley, left);
+}
+
+\step {
+  \mountain_fold(bisec_acb, c);
+  \mountain_fold(bisec_acd, c);
+  \valley_fold(bisec_acb, bisec_acd);
+  \simple_arrow(c, a2, none, valley, right, 100);
+  \caption("Petal fold");
+}
+
+\step {
+  \unfill(a,b,c,d);
+  \fill(back, bisec_acb, c, bisec_acd);
+  \hide(a,b,d);
+  \show([a2, c]);
+  \border(bisec_acb, c);	
+  \border(bisec_acd, c);
+  bisec_a2cbi_b = \point_to_line(bisec_acb, c, [a2, c], [bisec_acb, a2],second);
+  \valley_fold(bisec_a2cbi_b, c);
+  sbisec_acb = \symmetry(bisec_acb, [bisec_a2cbi_b, c]);
+  \simple_arrow(bisec_acb, sbisec_acb, none, valley, left);
+
+  bisec_a2cbi_d = \point_to_line(bisec_acd, c, [a2, c], [bisec_acd, a2], first);
+  \valley_fold(bisec_a2cbi_d, c);
+  sbisec_acd = \symmetry(bisec_acd, [bisec_a2cbi_d, c]);
+  \simple_arrow(bisec_acd, sbisec_acd, none, valley, right);
+  \caption("Repeat behind");
+}
+
+\step {
+  \cut([bisec_acd, a2], bisec_a2cbi_d);
+  \cut([bisec_acb, a2], bisec_a2cbi_b);
+  \unfill(a2, bisec_acb, bisec_acd);
+  \unfill(bisec_acb, c, bisec_acd);
+  \fill(back, bisec_a2cbi_b, c, bisec_a2cbi_d, a2);
+  \hide(bisec_acd, bisec_acb);
+  \border(bisec_a2cbi_b, c);
+  \border(bisec_a2cbi_d, c);
+  \border(bisec_a2cbi_d, sbisec_acd);
+  \border(bisec_a2cbi_b, sbisec_acb);
+  inter1 = \intersection([a, bisec_acd], [c, bisec_a2cbi_d]);
+  \border(inter1, sbisec_acd);
+  inter2 = \intersection([a, bisec_acb], [c, bisec_a2cbi_b]);
+  \border(inter2, sbisec_acb);
+  bottom_tail = \fraction(inter2, c, 24, 100);
+  \cut([bisec_a2cbi_b, c], bottom_tail);
+  \mountain_fold(o, bottom_tail, 0, -50);
+  bottom_neck = \fraction(inter1, c, 23, 100);
+  \cut([bisec_a2cbi_d, c], bottom_neck);
+  \mountain_fold(o, bottom_neck, 0, -50);
+  tail = \symmetry(c, [o, bottom_tail]);
+  \simple_arrow(c, tail, none, valley, left);
+  neck = \symmetry(c, [o, bottom_neck]);
+  \simple_arrow(c, neck, none, valley, right);
+  new_visible_center = \middle(neck, tail);
+  \caption("Inside reverse fold tail and neck");
+}
+
+\scale(150);
+
+\step {
+  \hide(c);
+  \unfill(bisec_a2cbi_b, c, bisec_a2cbi_d, a2);
+  \border(o, a2);
+  \border(o, bottom_tail);
+  \border(bottom_tail, tail);
+  \border(o, tail, [bisec_a2cbi_b, bottom_tail]);
+  \border(o, bottom_neck);
+  \border(bottom_neck, neck);
+  \border(o, neck, [bisec_a2cbi_d, bottom_neck]);
+  \fill(back, a2, bisec_a2cbi_d, bottom_neck, o);
+  \fill(back, a2, bisec_a2cbi_b, bottom_tail, o);
+  \fill(back, neck, bottom_neck, o);
+  \fill(back, tail, bottom_tail, o);
+
+  bottom_head = \fraction(neck, bottom_neck, 27, 100);
+  top_head = \fraction(neck, o, 31, 100);
+  \mountain_fold(bottom_head, top_head, -200, -150);
+  head = \symmetry(neck, [bottom_head, top_head]);
+  \cut([neck, bottom_neck], bottom_head);
+  \simple_arrow(neck, head, none, valley, left);
+
+  \visible_area_center(top_head);
+  \clip;
+  \caption("Inside reverse fold to form the head");
+ \debug_point;
+}
+
+\visible_area_center(new_visible_center);
+
+\scale(120);
+
+\step { 
+  \hide(neck);
+  \unfill(neck, bottom_neck, o);
+  \border(top_head, bottom_head);
+  \border(bottom_head, head);
+  \border(o, top_head, [bisec_a2cbi_d, bottom_neck]);
+  \border(top_head, head, [bottom_neck, bottom_head]);
+  \fill(back, o, top_head, bottom_head, bottom_neck);
+  \fill(back, top_head, bottom_head, head);
+  \valley_fold(inter1, inter2);
+  end_open_tail = \fraction(sbisec_acb, bisec_a2cbi_b, 120, 100);
+  end_open_head = \fraction(sbisec_acd, bisec_a2cbi_d, 120, 100);
+  \simple_arrow(a2, end_open_head, none, mountain, left);
+  \simple_arrow(a2, end_open_tail, none, valley, right);
+  \caption("Open wings");
+  \caption("You obtain the finished crane.");
+}
